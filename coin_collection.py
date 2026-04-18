@@ -85,11 +85,17 @@ def init_db():
 
 @app.route("/")
 def index():
+    """Home page"""
+    return render_template("index.html")
+
+
+@app.route("/coins")
+def coins():
     """Display all coins"""
     conn = get_db()
     coins = conn.execute("SELECT * FROM coins").fetchall()
     conn.close()
-    return render_template("index.html", coins=coins)
+    return render_template("coins.html", coins=coins)
 
 
 @app.route("/add_coin", methods=["GET", "POST"])

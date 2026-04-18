@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PyCoinCol - Coin Collection Manager</title>
+    <title>Home - PyCoinCol</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🪙 PyCoinCol</h1>
-            <div class="header-links">
-                <a href="{{ url_for('index') }}" class="btn">View All Coins</a>
-                <a href="{{ url_for('add_coin') }}" class="btn btn-primary">Add New Coin</a>
-            </div>
         </header>
         
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -26,68 +22,19 @@
             {% endif %}
         {% endwith %}
         
-        <main>
-            {% if coins %}
-            <table class="coins-table">
-                <thead>
-                    <tr>
-                        <th class="image-column">Image</th>
-                        <th>PCGS #</th>
-                        <th>Coin Details</th>
-                        <th class="actions-column">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for coin in coins %}
-                        <tr class="coin-row" data-id="{{ coin.id }}">
-                            <td class="image-cell">
-                                {% if coin.image_url %}
-                                    <img src="{{ coin.image_url }}" alt="{{ coin.name }}">
-                                {% else %}
-                                    <div class="coin-placeholder">
-                                        <span>🪙</span>
-                                        <p>{{ coin.name[:2].upper() }}</p>
-                                    </div>
-                                {% endif %}
-                            </td>
-                            <td class="pcgs-cell">{{ coin.pcgs_number if coin.pcgs_number else '-' }}</td>
-                            <td class="details-cell">
-                                <h3>{{ coin.name }}</h3>
-                                <div class="coin-meta">
-                                    {% if coin.year %}
-                                        <span class="tag tag-year">{{ coin.year }}</span>
-                                    {% endif %}
-                                    {% if coin.mint %}
-                                        <span class="tag tag-mint">{{ coin.mint }}</span>
-                                    {% endif %}
-                                    {% if coin.condition %}
-                                        <span class="tag tag-condition">{{ coin.condition }}</span>
-                                    {% endif %}
-                                </div>
-                                {% if coin.description %}
-                                    <p class="coin-description">{{ coin.description[:100] }}{% if coin.description|length > 100 %}...{% endif %}</p>
-                                {% endif %}
-                                {% if coin.price %}
-                                    <div class="coin-price">Est. Value: ${{ "%.2f"|format(coin.price) }}</div>
-                                {% endif %}
-                            </td>
-                            <td class="actions-cell">
-                                <a href="{{ url_for('edit_coin', id=coin.id) }}" class="btn btn-secondary">Edit</a>
-                                <button onclick="confirmDelete({{ coin.id }}, '{{ coin.name }}')" class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </tbody>
-            </table>
-        {% else %}
-<div class="empty-state">
-                    <h2>No coins in your collection yet!</h2>
-                    <p>Click "Add New Coin" to start building your collection.</p>
-                    <a href="{{ url_for('add_coin') }}" class="btn btn-primary">Add Your First Coin</a>
-                </div>
-        {% endif %}
-        </main>
+        <div class="main-content">
+            <section class="menu">
+                <nav class="menu-nav">
+                    <a href="{{ url_for('index') }}" class="menu-link active">Welcome</a>
+                    <a href="{{ url_for('coins') }}" class="menu-link">Coins</a>
+                </nav>
+            </section>
+            
+            <section class="welcome">
+                <h2>Welcome to PyCoinCol</h2>
+                <p>Manage and track your coin collection easily. Add coins, view their details, and organize your collection in one place.</p>
+            </section>
+        </div>
         
         <footer>
             <p>PyCoinCol &copy; 2026</p>

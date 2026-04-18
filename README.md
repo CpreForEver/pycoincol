@@ -40,34 +40,25 @@ The application automatically uses the `PCGS_API_KEY` environment variable for A
 
 ## Database Fields
 
-The `coins` table contains the following fields matching PCGS.json structure:
+The `coins` table contains the following fields matching simplified coin data structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
 | id | INTEGER | Auto-increment primary key |
+| coin_name | TEXT | Coin name (required) |
+| coin_no | TEXT | PCGS certification number |
+| cert_no | TEXT | Certificate number |
+| year | INTEGER | Year of issue |
+| grade | TEXT | Grade (e.g., MS-65) |
+
+| Field | Type | Description |
+|-------|------|-------------|
 | pcgs_no | TEXT | PCGS certification number |
 | cert_no | TEXT | Certificate number |
-| name | TEXT | Coin name (required) |
+| coin_name | TEXT | Coin name (required) |
 | year | INTEGER | Year of issue |
-| denomination | TEXT | Coin denomination (e.g., Quarter, Half Dollar) |
-| mintage | TEXT | Mintage information |
-| mint_mark | TEXT | Mint mark (e.g., D, S) |
-| mint_location | TEXT | Full mint location name |
-| metal_content | TEXT | Metal composition (e.g., 90% Silver) |
-| diameter | REAL | Diameter in millimeters |
-| edge | TEXT | Edge type (e.g., Reeded, Smooth) |
-| weight | REAL | Weight in grams |
-| country | TEXT | Country of origin |
 | grade | TEXT | Grade (e.g., MS-65) |
-| designation | TEXT | Special designation (e.g., Doubled Die) |
-| price_guide_value | REAL | Estimated market value |
-| population | INTEGER | PCGS population count |
-| pop_higher | INTEGER | Population at higher grades |
-| coin_facts_link | TEXT | Link to CoinFacts |
-| designer | TEXT | Coin designer name |
-| thumbnail_url | TEXT | Thumbnail image URL |
-| fullsize_url | TEXT | Full-size image URL |
-| description | TEXT | Coin description |
+
 
 ## Installation
 
