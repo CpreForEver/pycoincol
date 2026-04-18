@@ -98,27 +98,53 @@ def add_coin():
     if request.method == "POST":
         name = request.form["name"]
         year = request.form["year"]
+        denomination = request.form["denomination"]
         mint = request.form["mint"]
-        condition = request.form["condition"]
+        mint_mark = request.form["mint_mark"]
+        mint_location = request.form["mint_location"]
+        metal_content = request.form["metal_content"]
+        diameter = request.form.get("diameter", "")
+        edge = request.form["edge"]
+        weight = request.form.get("weight", "")
+        country = request.form["country"]
         grade = request.form["grade"]
-        description = request.form["description"]
-        price = float(request.form["price"])
-        image_url = request.form["image_url"]
-        pcgs_number = request.form.get("pcgs_number", "")
+        designation = request.form["designation"]
+        price_guide_value = request.form.get("price_guide_value", "")
+        population = request.form.get("population", "")
+        pop_higher = request.form.get("pop_higher", "")
+        coin_facts_link = request.form.get("coin_facts_link", "")
+        designer = request.form["designer"]
+        thumbnail_url = request.form.get("thumbnail_url", "")
+        fullsize_url = request.form.get("fullsize_url", "")
+        pcgs_no = request.form.get("pcgs_no", "")
+        cert_no = request.form.get("cert_no", "")
 
         conn = get_db()
         conn.execute(
-            "INSERT INTO coins (name, year, mint, condition, grade, description, price, image_url, pcgs_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO coins (pcgs_no, cert_no, name, year, denomination, mint, mint_mark, mint_location, metal_content, diameter, edge, weight, country, grade, designation, price_guide_value, population, pop_higher, coin_facts_link, designer, thumbnail_url, fullsize_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (
+                pcgs_no,
+                cert_no,
                 name,
                 int(year) if year else None,
+                denomination,
                 mint,
-                condition,
+                mint_mark,
+                mint_location,
+                metal_content,
+                float(diameter) if diameter else None,
+                edge,
+                float(weight) if weight else None,
+                country,
                 grade,
-                description,
-                price,
-                image_url,
-                pcgs_number,
+                designation,
+                float(price_guide_value) if price_guide_value else None,
+                int(population) if population else None,
+                int(pop_higher) if pop_higher else None,
+                coin_facts_link,
+                designer,
+                thumbnail_url,
+                fullsize_url,
             ),
         )
         conn.commit()
@@ -141,7 +167,6 @@ def search_pcgs_certno():
         return redirect(url_for("add_coin"))
 
     try:
-
         # Load and verify token
         pcgs_api_key = os.environ.get("PCGS_API_KEY", "")
         if not pcgs_api_key:
@@ -215,27 +240,53 @@ def edit_coin(id):
     if request.method == "POST":
         id = request.form["id"]
         name = request.form["name"]
-        year = request.form["year"]
-        mint = request.form["mint"]
-        condition = request.form["condition"]
+        year = request.form.get("year", "")
+        denomination = request.form.get("denomination", "")
+        mint = request.form.get("mint", "")
+        mint_mark = request.form.get("mint_mark", "")
+        mint_location = request.form.get("mint_location", "")
+        metal_content = request.form.get("metal_content", "")
+        diameter = request.form.get("diameter", "")
+        edge = request.form.get("edge", "")
+        weight = request.form.get("weight", "")
+        country = request.form.get("country", "")
         grade = request.form["grade"]
-        description = request.form["description"]
-        price = float(request.form["price"])
-        image_url = request.form["image_url"]
-        pcgs_number = request.form.get("pcgs_number", "")
+        designation = request.form.get("designation", "")
+        price_guide_value = request.form.get("price_guide_value", "")
+        population = request.form.get("population", "")
+        pop_higher = request.form.get("pop_higher", "")
+        coin_facts_link = request.form.get("coin_facts_link", "")
+        designer = request.form.get("designer", "")
+        thumbnail_url = request.form.get("thumbnail_url", "")
+        fullsize_url = request.form.get("fullsize_url", "")
+        pcgs_no = request.form.get("pcgs_no", "")
+        cert_no = request.form.get("cert_no", "")
 
         conn.execute(
-            "UPDATE coins SET name=?, year=?, mint=?, condition=?, grade=?, description=?, price=?, image_url=?, pcgs_number=? WHERE id=?",
+            "UPDATE coins SET name=?, year=?, denomination=?, mint=?, mint_mark=?, mint_location=?, metal_content=?, diameter=?, edge=?, weight=?, country=?, grade=?, designation=?, price_guide_value=?, population=?, pop_higher=?, coin_facts_link=?, designer=?, thumbnail_url=?, fullsize_url=?, pcgs_no=?, cert_no=? WHERE id=?",
             (
                 name,
                 int(year) if year else None,
+                denomination,
                 mint,
-                condition,
+                mint_mark,
+                mint_location,
+                metal_content,
+                float(diameter) if diameter else None,
+                edge,
+                float(weight) if weight else None,
+                country,
                 grade,
-                description,
-                price,
-                image_url,
-                pcgs_number,
+                designation,
+                float(price_guide_value) if price_guide_value else None,
+                int(population) if population else None,
+                int(pop_higher) if pop_higher else None,
+                coin_facts_link,
+                designer,
+                thumbnail_url,
+                fullsize_url,
+                pcgs_no,
+                cert_no,
                 int(id),
             ),
         )

@@ -42,30 +42,15 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="mintage">Mintage</label>
-                            <input type="text" id="mintage" name="mintage" value="{{ coin.mintage or '' }}">
+                            <label for="mint">Mint</label>
+                            <input type="text" id="mint" name="mint" value="{{ coin.mint or '' }}">
                         </div>
-                    </div>
-                    
-                    <div class="form-row">
+                        
                         <div class="form-group">
                             <label for="mint_mark">Mint Mark</label>
                             <input type="text" id="mint_mark" name="mint_mark" value="{{ coin.mint_mark or '' }}">
                         </div>
-                        <div class="form-group">
-                            <label for="mint">Mint</label>
-                            <select id="mint" name="mint">
-                                <option value="">Select Mint</option>
-                                <option value="P" {% if coin.mint == 'P' %}selected{% endif %}>Philadelphia (P)</option>
-                                <option value="D" {% if coin.mint == 'D' %}selected{% endif %}>Denver (D)</option>
-                                <option value="S" {% if coin.mint == 'S' %}selected{% endif %}>San Francisco (S)</option>
-                                <option value="O" {% if coin.mint == 'O' %}selected{% endif %}>New Orleans (O)</option>
-                                <option value="CC" {% if coin.mint == 'CC' %}selected{% endif %}>Carson City (CC)</option>
-                                <option value="Other" {% if coin.mint == 'Other' %}selected{% endif %}>Other</option>
-                            </select>
-                        </div>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="mint_location">Mint Location</label>
@@ -89,7 +74,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="weight">Weight (g)</label>
-                            <input type="number" id="weight" name="weight" step="0.1" value="{{ coin.weight or '' }}">
+                            <input type="number" id="weight" name="weight" step="0.01" value="{{ coin.weight or '' }}">
                         </div>
                         <div class="form-group">
                             <label for="country">Country</label>
@@ -133,10 +118,6 @@
                             <label for="fullsize_url">Fullsize</label>
                             <input type="url" id="fullsize_url" name="fullsize_url" value="{{ coin.fullsize_url or '' }}">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="5">{{ coin.description or '' }}</textarea>
                     </div>
                     
                     <div class="form-actions">
