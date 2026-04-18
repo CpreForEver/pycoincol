@@ -331,7 +331,7 @@ def export_template_csv():
 def coins():
     """Display all coins"""
     conn = get_db()
-    coins = conn.execute("SELECT * FROM coins ORDER BY price DESC LIMIT 10").fetchall()
+    coins = conn.execute("SELECT * FROM coins ORDER BY price_guide_value DESC LIMIT 10").fetchall()
     conn.close()
     return render_template("coins.html", coins=coins)
 
@@ -395,7 +395,7 @@ def add_coin():
         conn.close()
 
         flash(f'Coin "{name}" added successfully!', "success")
-        return redirect(url_for("index"))
+        return redirect(url_for("coins"))
 
     return render_template("add_coin.html")
 
