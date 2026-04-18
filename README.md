@@ -17,7 +17,8 @@ A Flask-based web application for managing coin collections with SQLite storage,
 - Edit existing coins
 - Delete coins with confirmation
 - Responsive HTML/CSS/JS interface
-- Search PCGS API to fetch coin data by PCGS number
+- Search coin database directly from home page
+- PCGS API integration to fetch coin data by PCGS number
 - Add coins manually or import from PCGS API
 - PCGS API Bearer token authentication
 

@@ -402,6 +402,120 @@ main {
     box-shadow: var(--shadow);
 }
 
+/* Coins Search Form */
+
+.coins-search-form {
+    margin-top: 1.5rem;
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-row .label {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 80px;
+}
+
+.search-row input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    background: var(--bg-primary);
+}
+
+.search-row input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--bg-secondary);
+}
+
+.search-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.search-btn {
+    padding: 0.6rem 1.2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-btn:hover {
+    background: var(--primary-hover);
+}
+
+.total-amount {
+    text-align: right;
+}
+
+.total-amount .label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-right: 0.5rem;
+}
+
+.total-amount .amount-value {
+    font-weight: 700;
+    color: var(--success-color);
+    font-size: 1.1rem;
+}
+
+.coins-table {
+    width: 100%;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.coins-table thead {
+    background: var(--bg-primary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.coins-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.coins-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition);
+}
+
+.coins-table tbody tr:hover {
+    background: var(--bg-primary);
+}
+
+.coins-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.coins-table td {
+    padding: 1rem;
+    vertical-align: top;
+    font-size: 0.9rem;
+}
+
 .form-container h1 {
     margin-bottom: 1.5rem;
 }

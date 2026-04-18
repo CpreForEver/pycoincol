@@ -95,10 +95,19 @@ def init_db():
     conn.close()
 
 
+def get_total_value():
+    """Calculate total value of all coins by summing price_guide_value"""
+    conn = get_db()
+    total = conn.execute("SELECT SUM(price_guide_value) FROM coins").fetchone()[0]
+    conn.close()
+    return 0 if total is None else round(total, 2)
+
+
 @app.route("/")
 def index():
     """Home page"""
-    return render_template("index.html")
+    total_value = get_total_value()
+    return render_template("index.html", total_value=total_value)
 
 
 @app.route("/export_csv", methods=["GET"])
@@ -334,6 +343,26 @@ def coins():
     coins = conn.execute("SELECT * FROM coins ORDER BY price_guide_value DESC LIMIT 10").fetchall()
     conn.close()
     return render_template("coins.html", coins=coins)
+
+
+@app.route("/api/coins", methods=["GET"])
+def api_coins():
+    """API endpoint to get all coins or search results"""
+    search_term = request.args.get("q", "").strip()
+    conn = get_db()
+    
+    if search_term:
+        # Search query
+        coins = conn.execute(
+            "SELECT * FROM coins WHERE name LIKE ? OR pcgs_no LIKE ? OR year LIKE ? ORDER BY price_guide_value DESC",
+            (f"%{search_term}%", f"%{search_term}%", f"{search_term}")
+        ).fetchall()
+    else:
+        # Get all coins (limit to 100 for performance)
+        coins = conn.execute("SELECT * FROM coins ORDER BY price_guide_value DESC").fetchmany(100)
+    
+    conn.close()
+    return jsonify([dict(coin) for coin in coins])
 
 
 @app.route("/add_coin", methods=["GET", "POST"])
