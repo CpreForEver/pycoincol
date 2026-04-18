@@ -9,7 +9,7 @@ function confirmDelete(id, name) {
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = '/';
+                window.location.href = '/coins';
             } else {
                 alert('Error deleting coin. Please try again.');
             }
