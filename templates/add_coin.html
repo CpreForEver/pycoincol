@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Coin - PyCoinCol</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="page-layout">
+    <div class="container">
+        <header>
+            <a href="{{ url_for('index') }}" class="back-link">&larr; Back to Collection</a>
+            <h1>Add New Coin</h1>
+        </header>
+        
+        <main>
+            <div class="form-container">
+                <form action="{{ url_for('add_coin') }}" method="POST" class="coin-form" id="coin-form">
+                 
+                    <div class="form-group">
+                        <label for="pcgs_no">PCGS No</label>
+                        <input type="text" id="pcgs_no" name="pcgs_no" placeholder="e.g., 3456789">
+                        <button type="button" onclick="searchPcgs()" class="btn-search">Search PCGS API</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="cert_no">Cert No</label>
+                        <input type="text" id="cert_no" name="cert_no" placeholder="e.g., C-12345">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Coin Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="e.g., 1943 Doubled Die Nickel" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="denomination">Denomination</label>
+                        <input type="text" id="denomination" name="denomination" placeholder="e.g., Quarter">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input type="number" id="year" name="year" min="1000" max="2100" placeholder="e.g., 1943">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mint">Mint</label>
+                            <input type="number" id="mint" name="mint" min="1000" placeholder="e.g., 36273367">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mint_mark">Mint Mark</label>
+                            <input type="text" id="mint_mark" name="mint_mark" placeholder="e.g., D">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mint_location">Mint Location</label>
+                            <input type="text" id="mint_location" name="mint_location" placeholder="e.g., Philadelphia">
+                        </div>
+                        <div class="form-group">
+                            <label for="metal_content">Metal Content</label>
+                            <input type="text" id="metal_content" name="metal_content" placeholder="e.g., 90% Silver">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="diameter">Diameter (mm)</label>
+                            <input type="number" id="diameter" name="diameter" step="0.1" min="0" placeholder="e.g., 24.3">
+                        </div>
+                        <div class="form-group">
+                            <label for="edge">Edge</label>
+                            <input type="text" id="edge" name="edge" placeholder="e.g., Reeded">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="weight">Weight (g)</label>
+                            <input type="number" id="weight" name="weight" step="0.01" min="0" placeholder="e.g., 5.0">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" name="country" placeholder="e.g., United States">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade">Grade</label>
+                        <input type="text" id="grade" name="grade" placeholder="e.g., MS-67">
+                    </div>
+                    <div class="form-group">
+                        <label for="designation">Designation</label>
+                        <input type="text" id="designation" name="designation" placeholder="e.g., Doubled Die">
+                    </div>
+                    <div class="form-group">
+                        <label for="price_guide_value">Price Guide Value ($)</label>
+                        <input type="number" id="price_guide_value" name="price_guide_value" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="population">Population</label>
+                        <input type="number" id="population" name="population" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="pop_higher">Pop Higher</label>
+                        <input type="number" id="pop_higher" name="pop_higher" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="coin_facts_link">CoinFacts Link</label>
+                        <input type="url" id="coin_facts_link" name="coin_facts_link" placeholder="https://www.coinfacts.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="designer">Designer</label>
+                        <input type="text" id="designer" name="designer" placeholder="e.g., Gobrecht">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="thumbnail_url">Thumbnail</label>
+                            <input type="url" id="thumbnail_url" name="thumbnail_url" placeholder="https://example.com/thumb.jpg">
+                        </div>
+                        <div class="form-group">
+                            <label for="fullsize_url">Fullsize</label>
+                            <input type="url" id="fullsize_url" name="fullsize_url" placeholder="https://example.com/full.jpg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="5" placeholder="Describe your coin..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Add Coin to Collection</button>
+                        <a href="{{ url_for('index') }}" class="btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+        
+</body>
+    
+    <script>
+        async function searchPcgs() {
+            const pcgsNo = document.getElementById('pcgs_no').value.trim();
+            if (!pcgsNo) {
+                alert('Please enter a PCGS number');
+                return;
+            }
+            
+            try {
+                // Fetch PCGS data using certno (pcgs number)
+                const response = await fetch(`/search_pcgs_certno?pcgs_no=${encodeURIComponent(pcgsNo)}`);
+                const data = await response.json();
+                
+                if (response.ok && data && data.PCGSNo) {
+                    // Fill form fields with API data
+                    document.getElementById('cert_no').value = data.CertNo || '';
+                    document.getElementById('name').value = data.Name || '';
+                    document.getElementById('year').value = data.Year || '';
+                    document.getElementById('denomination').value = data.Denomination || '';
+                    document.getElementById('mint').value = data.Mintage || '';
+                    document.getElementById('mint_mark').value = data.MintMark || '';
+                    document.getElementById('mint_location').value = data.MintLocation || '';
+                    document.getElementById('metal_content').value = data.MetalContent || '';
+                    document.getElementById('diameter').value = data.Diameter || '';
+                    document.getElementById('edge').value = data.Edge || '';
+                    document.getElementById('weight').value = data.Weight || '';
+                    document.getElementById('country').value = data.Country || '';
+                    document.getElementById('grade').value = data.Grade || '';
+                    document.getElementById('designation').value = data.Designation || '';
+                    document.getElementById('price_guide_value').value = data.PriceGuideValue || 0;
+                    document.getElementById('population').value = data.Population || 0;
+                    document.getElementById('pop_higher').value = data.PopHigher || 0;
+                    document.getElementById('coin_facts_link').value = 'http://' + data.CoinFactsLink || '';
+                    document.getElementById('designer').value = data.Designer || '';
+                }else{
+                    alert('Search error: PCGS number ' + pcgsNo + ' not found')
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                alert('Failed to fetch PCGS data');
+            }
+        }
+    </script>
+</html>

@@ -1,0 +1,12 @@
+[project]
+name = "pycoincol"
+version = "1.0.0"
+description = "A Flask application for managing a coin collection"
+requires-python = ">=3.9"
+dependencies = [
+    "flask",
+    "requests",
+]
+
+[tool.uv]
+dev-dependencies = []
