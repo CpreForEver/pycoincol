@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coins - PyCoinCol</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🪙 PyCoinCol</h1>
+        </header>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <section class="action-section">
+            <section class="menu">
+                <nav class="menu-nav">
+                    <a href="{{ url_for('index_bp.index') }}" class="menu-link active">Welcome</a>
+                    <a href="{{ url_for('coins_bp.coins') }}" class="menu-link">Coins</a>
+                </nav>
+            </section>
+            <div class="action-buttons">
+                <a href="{{ url_for('coins_bp.add_coin') }}" class="btn btn-primary">Add New Coin</a>
+                <span class="divider">|</span>
+                <a href="{{ url_for('coins_bp.export_template_csv') }}" class="btn btn-secondary">Download Template</a>
+                <a href="{{ url_for('coins_bp.export_csv') }}" class="btn btn-success">Export All Coins</a>
+                <form action="{{ url_for('coins_bp.import_csv') }}" method="POST" enctype="multipart/form-data" style="display:inline;">
+                    <input type="file" name="file" accept=".csv" class="btn btn-warning">
+                    <button type="submit" class="btn btn-success">Import CSV</button>
+                </form>
+            </div>
+        </section>
+
+        {% if coins %}
+            <table class="coins-table">
+                <thead>
+                    <tr>
+                        <th class="image-column">Image</th>
+                        <th>Coin Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coin in coins %}
+                        <tr class="coin-row" data-id="{{ coin.id }}">
+                            <td class="image-cell">
+                                {% if coin.fullsize_url %}
+                                    <img src="{{ coin.fullsize_url }}" alt="{{ coin.name }}">
+                                {% else %}
+                                    <div class="coin-placeholder">
+                                        <span>🪙</span>
+                                        <p>{{ coin.name }}</p>
+                                    </div>
+                                {% endif %}
+                            </td>
+                             <td class="details-cell">
+                                 <h3>{{ coin.name }}</h3>
+                                 {% if coin.coin_facts_link %}
+                                     <a href="{{ coin.coin_facts_link }}" target="_blank" class="coin-facts-link">PCGS Link</a>
+                                 {% endif %}
+                                 {% if coin.price_guide_value %}
+                                     <span class="price-value">${{ coin.price_guide_value }}</span>
+                                 {% endif %}
+                                 <div class="coin-meta">
+                                     {% if coin.year %}
+                                         <span class="tag tag-year">{{ coin.year }}</span>
+                                     {% endif %}
+                                     {% if coin.mint %}
+                                         <span class="tag tag-mint">{{ coin.mint }}</span>
+                                     {% endif %}
+                                     {% if coin.grade %}
+                                         <span class="tag tag-grade">{{ coin.grade }}</span>
+                                     {% endif %}
+                                 </div>
+                             </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <h2>No coins in your collection yet!</h2>
+                <p>Click "Add New Coin" to start building your collection.</p>
+                <a href="{{ url_for('coins_bp.add_coin') }}" class="btn btn-primary">Add Your First Coin</a>
+            </div>
+        {% endif %}
+
+        </main>
+        
+        <footer>
+            <p>PyCoinCol &copy; 2026</p>
+        </footer>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

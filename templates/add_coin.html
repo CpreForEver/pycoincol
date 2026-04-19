@@ -19,7 +19,7 @@
                  
                     <div class="form-group">
                         <label for="pcgs_no">PCGS No</label>
-                        <input type="text" id="pcgs_no" name="pcgs_no" placeholder="e.g., 3456789">
+                        <input type="text" id="pcgs_no" name="pcgs_no" placeholder="e.g., 3456789" onkeydown="handleEnter(event)">
                         <button type="button" onclick="searchPcgs()" class="btn-search">Search PCGS API</button>
                     </div>
                     <div class="form-group">
@@ -131,11 +131,11 @@
     
     <script>
         function handleEnter(event) {
-            if (event.key === 'Enter') {
+            // Check if Enter was pressed in the PCGS No input field only
+            const pcgsInput = document.getElementById('pcgs_no');
+            if (pcgsInput === event.target && event.key === "Enter") {
                 searchPcgs();
-                return false;
             }
-            return true;
         }
         
         async function searchPcgs() {

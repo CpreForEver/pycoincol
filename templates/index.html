@@ -22,7 +22,7 @@
             {% endif %}
         {% endwith %}
         
-<div class="main-content">
+        <div class="main-content">
             <section class="menu">
                 <nav class="menu-nav">
                     <a href="{{ url_for('index_bp.index') }}" class="menu-link active">Welcome</a>
@@ -76,15 +76,15 @@
                 </table>
             </section>
         </div>
-                        <div class="total-amount">
-                            <label class="label">Total Amount:</label>
-                            <span class="amount-value" id="total-amount">${{ "{:,.2f}".format(total_value) }}</span>
-                        </div>
-                    </div>
-        <footer>
-            <p>PyCoinCol &copy; 2026</p>
-        </footer>
-    </div>
-    <script src="/static/js/app.js"></script>
+        <div class="total-amount">
+           <label class="label">Total Amount:</label>
+             <span class="amount-value" id="total-amount">${{ "{:,.2f}".format(total_value) }}</span>
+         </div>
+      </div>
+     <footer>
+         <p>PyCoinCol &copy; 2026</p>
+     </footer>
+  </div>
+  <script src="/static/js/app.js"></script>
 </body>
 </html>
