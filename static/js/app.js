@@ -46,6 +46,10 @@ function searchCoins() {
                             <td>${coin.name}</td>
                             <td>${coin.grade || '-'}</td>
                             <td>$${coin.price_guide_value ? coin.price_guide_value.toFixed(2) : '-'}</td>
+                            <td>
+                             <a href="edit_coin/${coin.id}" class="btn btn-small btn-secondary">Edit</a>
+                             <a href="javascript:void(0);" onclick="confirmDelete(${coin.id}, '${coin.name}')" class="btn btn-small btn-danger">Delete</a>
+                           </td>
                         </tr>
                     `).join('');
                     

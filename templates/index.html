@@ -25,8 +25,8 @@
 <div class="main-content">
             <section class="menu">
                 <nav class="menu-nav">
-                    <a href="{{ url_for('index') }}" class="menu-link active">Welcome</a>
-                    <a href="{{ url_for('coins') }}" class="menu-link">Coins</a>
+                    <a href="{{ url_for('index_bp.index') }}" class="menu-link active">Welcome</a>
+                    <a href="{{ url_for('coins_bp.coins') }}" class="menu-link">Coins</a>
                 </nav>
             </section>
 
@@ -55,18 +55,22 @@
                             <th>Name</th>
                             <th>Grade</th>
                             <th>Price Guide</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="coins-table-body">
                         {% for coin in coins %}
-                        <tr>
-                            <td>{{ coin.id }}</td>
-                            <td>{{ coin.pcgs_no or '-' }}</td>
-                            <td>{{ coin.year }}</td>
-                            <td>{{ coin.name }}</td>
-                            <td>{{ coin.grade or '-' }}</td>
-                            <td>${{ "%.2f"|format(coin.price_guide_value or 0) }}</td>
-                        </tr>
+                         <tr>
+                             <td>{{ coin.id }}</td>
+                             <td>{{ coin.pcgs_no or '-' }}</td>
+                             <td>{{ coin.year }}</td>
+                             <td>{{ coin.name }}</td>
+                             <td>{{ coin.grade or '-' }}</td>
+                             <td>${{ "%.2f"|format(coin.price_guide_value or 0) }}</td>
+                             <td>
+                               <a href="{{ url_for('edit_coin', id=coin.id) }}" class="btn btn-small btn-secondary">Edit</a>
+                             </td>
+                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -77,63 +81,6 @@
                             <span class="amount-value" id="total-amount">${{ "{:,.2f}".format(total_value) }}</span>
                         </div>
                     </div>
-                    
-                    <table class="coins-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>PCGS#</th>
-                                <th>Year</th>
-                                <th>Name</th>
-                                <th>Grade</th>
-                                <th>Price Guide</th>
-                            </tr>
-                        </thead>
-                        <tbody id="coins-table-body">
-                            {% for coin in coins %}
-                            <tr>
-                                <td>{{ coin.id }}</td>
-                                <td>{{ coin.pcgs_no or '-' }}</td>
-                                <td>{{ coin.year }}</td>
-                                <td>{{ coin.name }}</td>
-                                <td>{{ coin.grade or '-' }}</td>
-                                <td>${{ "%.2f"|format(coin.price_guide_value or 0) }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <noscript>
-                        {% if coins %}
-                        <table class="coins-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>PCGS#</th>
-                                    <th>Year</th>
-                                    <th>Name</th>
-                                    <th>Grade</th>
-                                    <th>Price Guide</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for coin in coins %}
-                                <tr>
-                                    <td>{{ coin.id }}</td>
-                                    <td>{{ coin.pcgs_no or '-' }}</td>
-                                    <td>{{ coin.year }}</td>
-                                    <td>{{ coin.name }}</td>
-                                    <td>{{ coin.grade or '-' }}</td>
-                                    <td>${{ "%.2f"|format(coin.price_guide_value or 0) }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        {% endif %}
-                    </noscript>
-                </form>
-            </section>
-        </div>
-        
         <footer>
             <p>PyCoinCol &copy; 2026</p>
         </footer>

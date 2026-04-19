@@ -9,14 +9,14 @@
 <body class="page-layout">
     <div class="container">
         <header>
-            <a href="{{ url_for('coins') }}" class="back-link">&larr; Back to Collection</a>
+            <a href="{{ url_for('coins_bp.coins') }}" class="back-link">&larr; Back to Collection</a>
             <h1>Edit Coin</h1>
         </header>
         
         <main>
             {% if coin %}
             <div class="form-container">
-                <form action="{{ url_for('edit_coin', id=coin.id) }}" method="POST" class="coin-form">
+                <form action="{{ url_for('index_bp.edit_coin', id=coin.id) }}" method="POST" class="coin-form">
                     <input type="hidden" name="id" value="{{ coin.id }}">
                     
                     <div class="form-group">
@@ -122,7 +122,7 @@
                     
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Update Coin</button>
-                        <a href="{{ url_for('coins') }}" class="btn">Cancel</a>
+                        <a href="{{ url_for('coins_bp.coins') }}" class="btn">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -130,7 +130,7 @@
             <div class="empty-state">
                 <h2>Coin Not Found</h2>
                 <p>Sorry, the coin you're looking for doesn't exist or has already been deleted.</p>
-                <a href="{{ url_for('coins') }}" class="btn btn-primary">Back to Collection</a>
+                <a href="{{ url_for('coins_bp.coins') }}" class="btn btn-primary">Back to Collection</a>
             </div>
             {% endif %}
         </main>

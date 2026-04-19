@@ -9,13 +9,13 @@
 <body class="page-layout">
     <div class="container">
         <header>
-            <a href="{{ url_for('index') }}" class="back-link">&larr; Back to Collection</a>
+            <a href="{{ url_for('index_bp.index') }}" class="back-link">&larr; Back to Collection</a>
             <h1>Add New Coin</h1>
         </header>
         
         <main>
             <div class="form-container">
-                <form action="{{ url_for('add_coin') }}" method="POST" class="coin-form" id="coin-form">
+                <form action="{{ url_for('coins_bp.add_coin') }}" method="POST" class="coin-form" id="coin-form">
                  
                     <div class="form-group">
                         <label for="pcgs_no">PCGS No</label>
@@ -121,7 +121,7 @@
                     
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Add Coin to Collection</button>
-                        <a href="{{ url_for('coins') }}" class="btn">Cancel</a>
+                        <a href="{{ url_for('coins_bp.coins') }}" class="btn">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -130,6 +130,14 @@
 </body>
     
     <script>
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                searchPcgs();
+                return false;
+            }
+            return true;
+        }
+        
         async function searchPcgs() {
             const pcgsNo = document.getElementById('pcgs_no').value.trim();
             if (!pcgsNo) {
