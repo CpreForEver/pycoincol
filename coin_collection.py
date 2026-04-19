@@ -110,8 +110,8 @@ def add_coin():
     return render_template("add_coin.html")
 
 
-@COINS_bp.route("/search_pcgs_certno", methods=["GET", "POST"])
-def search_pcgs_certno():
+@COINS_bp.route("/search_pcgs_coins", methods=["GET", "POST"])
+def search_pcgs_coins():
     """Search PCGS API by PCGS number"""
     pcgs_no = request.args.get("pcgs_no", request.form.get("pcgs_no", "")).strip()
 

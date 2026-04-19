@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Bank Note - PyCoinCol</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="page-layout">
+    <div class="container">
+        <header>
+            <a href="{{ url_for('index_bp.index') }}" class="back-link">&larr; Back to Collection</a>
+            <h1>Add New Bank Note</h1>
+        </header>
+        
+        <main>
+            <div class="form-container">
+                <form action="{{ url_for('notes_bp.add_note') }}" method="POST" class="coin-form" id="note-form">
+                    
+                    <div class="form-group">
+                        <label for="pcgs_no">PCGS No</label>
+                        <input type="text" id="pcgs_no" name="pcgs_no" placeholder="e.g., 3456789" onkeydown="handleEnter(event)">
+                        <button type="button" onclick="searchPcgs()" class="btn-search">Search PCGS API</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="cert_no">Cert No</label>
+                        <input type="text" id="cert_no" name="cert_no" placeholder="e.g., C-12345">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Bank Note Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="e.g., 1934 Silver Certificate" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="denomination">Denomination</label>
+                        <input type="text" id="denomination" name="denomination" placeholder="e.g., $1">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input type="number" id="year" name="year" min="1000" max="2100" placeholder="e.g., 1934">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="region">Region</label>
+                            <input type="text" id="region" name="region" placeholder="e.g., Federal Reserve District">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="serial_no">Serial No</label>
+                            <input type="text" id="serial_no" name="serial_no" placeholder="e.g., F00000001A">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="grade">Grade</label>
+                            <input type="text" id="grade" name="grade" placeholder="e.g., Cr-60">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="details">Details</label>
+                            <input type="text" id="details" name="details" placeholder="e.g., EPQ">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <input type="text" id="height" name="height" placeholder="e.g., 2.61">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="width">Width</label>
+                            <input type="text" id="width" name="width" placeholder="e.g., 6.14">
+                        </div>
+                        <div class="form-group">
+                            <label for="catalog_no1">Catalog No 1&2 (Long)</label>
+                            <input type="text" id="catalog_no1" name="catalog_no1" placeholder="e.g., 2008-P-6137">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="catalog_no2">Catalog No 1&2 (Short)</label>
+                            <input type="text" id="catalog_no2" name="catalog_no2" placeholder="e.g., 1934-S">
+                        </div>
+                        <div class="form-group">
+                            <label for="catalog1_long_desc">Catalog 1 Long Desc</label>
+                            <textarea id="catalog1_long_desc" name="catalog1_long_desc" placeholder="e.g., Star note..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="catalog2_long_desc">Catalog 2 Long Desc</label>
+                            <textarea id="catalog2_long_desc" name="catalog2_long_desc" placeholder="e.g., Brown Seal..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="catalog1_short_desc">Catalog 1 Short Desc</label>
+                            <input type="text" id="catalog1_short_desc" name="catalog1_short_desc" placeholder="Brief description">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="catalog2_short_desc">Catalog 2 Short Desc</label>
+                            <input type="text" id="catalog2_short_desc" name="catalog2_short_desc" placeholder="Brief description">
+                        </div>
+                        <div class="form-group">
+                            <label for="signers">Signers</label>
+                            <input type="text" id="signers" name="signers" placeholder="e.g., T1, T2">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qualifiers">Qualifiers</label>
+                            <input type="text" id="qualifiers" name="qualifiers" placeholder="e.g., R, O, P">
+                        </div>
+                        <div class="form-group">
+                            <label for="plate_no">Plate No</label>
+                            <input type="text" id="plate_no" name="plate_no" placeholder="e.g., A1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price_value_guide">Price Value Guide ($)</label>
+                        <input type="number" id="price_value_guide" name="price_value_guide" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="population">Population</label>
+                        <input type="number" id="population" name="population" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="pop_higher">Pop Higher</label>
+                        <input type="number" id="pop_higher" name="pop_higher" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="value_view_link">Value View Link</label>
+                        <input type="url" id="value_view_link" name="value_view_link" placeholder="https://www.pcgs.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="has_obverse_image">Has Obverse Image</label>
+                        <input type="checkbox" id="has_obverse_image" name="has_obverse_image">
+                    </div>
+                    <div class="form-group">
+                        <label for="has_reverse_image">Has Reverse Image</label>
+                        <input type="checkbox" id="has_reverse_image" name="has_reverse_image">
+                    </div>
+                    <div class="form-group">
+                        <label for="image_ready">Image Ready</label>
+                        <input type="checkbox" id="image_ready" name="image_ready">
+                    </div>
+                    <div class="form-group">
+                        <label for="image_description">Image Description</label>
+                        <input type="text" id="image_description" name="image_description" placeholder="e.g., Obverse with Federal Reserve seal">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Custom notes about this bank note"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Add Bank Note to Collection</button>
+                        <a href="{{ url_for('notes_bp.notes') }}" class="btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+        
+    </div>
+    
+    <script>
+        function handleEnter(event) {
+            const pcgsInput = document.getElementById('pcgs_no');
+            if (pcgsInput === event.target && event.key === "Enter") {
+                searchPcgs();
+            }
+        }
+        
+        async function searchPcgs() {
+            const pcgsNo = document.getElementById('pcgs_no').value.trim();
+            if (!pcgsNo) {
+                alert('Please enter a PCGS number');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/search_pcgs_certno?pcgs_no=${encodeURIComponent(pcgsNo)}`);
+                const data = await response.json();
+                
+                if (response.ok && data && data.PCGSNo) {
+                    document.getElementById('cert_no').value = data.CertNo || '';
+                    document.getElementById('name').value = data.Name || '';
+                    document.getElementById('year').value = data.Year || '';
+                    document.getElementById('denomination').value = data.Denomination || '';
+                    document.getElementById('serial_no').value = data.SerialNo || '';
+                    document.getElementById('grade').value = data.Grade || '';
+                    document.getElementById('details').value = data.Details || '';
+                    document.getElementById('population').value = data.Population || 0;
+                    document.getElementById('pop_higher').value = data.PopHigher || 0;
+                    document.getElementById('value_view_link').value = 'http://' + data.PCGSUrl || '';
+                    document.getElementById('description').value = data.Description || '';
+                    document.getElementById('pcgs_no').value = data.PCGSNo || '';
+                }else{
+                    alert('Search error: PCGS number ' + pcgsNo + ' not found')
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                alert('Failed to fetch PCGS data');
+            }
+        }
+    </script>
+</html>

@@ -166,7 +166,7 @@ uv sync
 
 ```bash
 # Initialize database and start the application
-uv run coin_collection.py
+uv run main.py
 ```
 
 The database (`coins.db`) is created automatically on first run.
@@ -177,8 +177,11 @@ Access the application at `http://localhost:5000`
 
 ```
 pycoincol/
-├── coin_collection.py    # Main Flask application
 ├── main.py               # Entry point
+├── notes_collection.py   # Bank notes blueprint
+├── coin_collection.py    # Coins blueprint
+├── index.py              # Index blueprint
+├── database.py           # Database functions
 ├── pyproject.toml        # Project configuration
 ├── coins.db              # SQLite database (auto-created)
 ├── pcgs_token.token      # PCGS API token (create this file)
@@ -186,7 +189,10 @@ pycoincol/
 │   ├── index.html       # Home page
 │   ├── coins.html       # Coin listing
 │   ├── add_coin.html    # Add coin form
-│   └── edit_coin.html   # Edit coin form
+│   ├── edit_coin.html   # Edit coin form
+│   ├── notes.html       # Bank notes listing
+│   ├── add_notes.html   # Add bank note form
+│   └── edit_notes.html  # Edit bank note form
 ├── static/
 │   ├── css/style.css    # Styles
 │   └── js/app.js        # Frontend JavaScript

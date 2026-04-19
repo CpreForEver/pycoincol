@@ -147,7 +147,7 @@
             
             try {
                 // Fetch PCGS data using certno (pcgs number)
-                const response = await fetch(`/search_pcgs_certno?pcgs_no=${encodeURIComponent(pcgsNo)}`);
+                const response = await fetch(`/search_pcgs_coins?pcgs_no=${encodeURIComponent(pcgsNo)}`);
                 const data = await response.json();
                 
                 if (response.ok && data && data.PCGSNo) {

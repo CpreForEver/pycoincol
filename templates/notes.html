@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Notes - PyCoinCol</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🪙 PyCoinCol</h1>
+        </header>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <section class="action-section">
+            <section class="menu">
+                <nav class="menu-nav">
+                    <a href="{{ url_for('index_bp.index') }}" class="menu-link active">Welcome</a>
+                    <a href="{{ url_for('coins_bp.coins') }}" class="menu-link">Coins</a>
+                    <a href="{{ url_for('notes_bp.notes') }}" class="menu-link">Bank Notes</a>
+                </nav>
+            </section>
+            <div class="action-buttons">
+                <a href="{{ url_for('notes_bp.add_note') }}" class="btn btn-primary">Add New Bank Note</a>
+                <span class="divider">|</span>
+                <a href="{{ url_for('notes_bp.export_template_csv') }}" class="btn btn-secondary">Download Template</a>
+                <a href="{{ url_for('notes_bp.export_note_csv') }}" class="btn btn-success">Export All Notes</a>
+                <form action="{{ url_for('notes_bp.import_note_csv') }}" method="POST" enctype="multipart/form-data" style="display:inline;">
+                    <input type="file" name="file" accept=".csv" class="btn btn-warning">
+                    <button type="submit" class="btn btn-success">Import CSV</button>
+                </form>
+            </div>
+        </section>
+
+        {% if notes %}
+            <table class="coins-table">
+                <thead>
+                    <tr>
+                        <th class="image-column">Image</th>
+                        <th>Bank Note Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in notes %}
+                        <tr class="note-row" data-id="{{ note.id }}">
+                            <td class="image-cell">
+                                {% if note.image_description %}
+                                    <div class="note-placeholder">
+                                        <span>🪪</span>
+                                        <p>{{ note.name }}</p>
+                                    </div>
+                                {% else %}
+                                    <div class="note-placeholder">
+                                        <span>🪪</span>
+                                        <p>{{ note.name }}</p>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td class="details-cell">
+                                <h3>{{ note.name }}</h3>
+                                {% if note.value_view_link %}
+                                    <a href="{{ note.value_view_link }}" target="_blank" class="coin-facts-link">PCGS Link</a>
+                                {% endif %}
+                                {% if note.price_value_guide %}
+                                    <span class="price-value">${{ note.price_value_guide }}</span>
+                                {% endif %}
+                                <div class="coin-meta">
+                                    {% if note.year %}
+                                        <span class="tag tag-year">{{ note.year }}</span>
+                                    {% endif %}
+                                    {% if note.denomination %}
+                                        <span class="tag tag-mint">{{ note.denomination }}</span>
+                                    {% endif %}
+                                    {% if note.grade %}
+                                        <span class="tag tag-grade">{{ note.grade }}</span>
+                                    {% endif %}
+                                    {% if note.serial_no %}
+                                        <span class="tag tag-serial">{{ note.serial_no }}</span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <h2>No bank notes in your collection yet!</h2>
+                <p>Click "Add New Bank Note" to start building your collection.</p>
+                <a href="{{ url_for('notes_bp.add_note') }}" class="btn btn-primary">Add Your First Bank Note</a>
+            </div>
+        {% endif %}
+
+        </main>
+        
+        <footer>
+            <p>PyCoinCol &copy; 2026</p>
+        </footer>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

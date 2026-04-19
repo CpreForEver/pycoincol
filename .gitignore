@@ -13,3 +13,4 @@ wheels/
 *.token
 *.db
 
+.agents/

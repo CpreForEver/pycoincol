@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Bank Note - PyCoinCol</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="page-layout">
+    <div class="container">
+        <header>
+            <a href="{{ url_for('notes_bp.notes') }}" class="back-link">&larr; Back to Collection</a>
+            <h1>Edit Bank Note</h1>
+        </header>
+        
+        <main>
+            <div class="form-container">
+                <form action="{{ url_for('notes_bp.edit_note', id=note.id) }}" method="POST" class="coin-form">
+                    <input type="hidden" name="id" value="{{ note.id }}">
+                    
+                    <div class="form-group">
+                        <label for="pcgs_no">PCGS No</label>
+                        <input type="text" id="pcgs_no" name="pcgs_no" value="{{ note.pcgs_no or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="cert_no">Cert No</label>
+                        <input type="text" id="cert_no" name="cert_no" value="{{ note.cert_no or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Bank Note Name *</label>
+                        <input type="text" id="name" name="name" required value="{{ note.name or '' }}" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="denomination">Denomination</label>
+                        <input type="text" id="denomination" name="denomination" value="{{ note.denomination or '' }}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input type="number" id="year" name="year" value="{{ note.year or '' }}" min="1000" max="2100">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="region">Region</label>
+                            <input type="text" id="region" name="region" value="{{ note.region or '' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="serial_no">Serial No</label>
+                            <input type="text" id="serial_no" name="serial_no" value="{{ note.serial_no or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="grade">Grade</label>
+                            <input type="text" id="grade" name="grade" value="{{ note.grade or '' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="details">Details</label>
+                            <input type="text" id="details" name="details" value="{{ note.details or '' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <input type="text" id="height" name="height" value="{{ note.height or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="width">Width</label>
+                            <input type="text" id="width" name="width" value="{{ note.width or '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="catalog_no1">Catalog No 1&2 (Long)</label>
+                            <input type="text" id="catalog_no1" name="catalog_no1" value="{{ note.catalog_no1 or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="catalog_no2">Catalog No 1&2 (Short)</label>
+                            <input type="text" id="catalog_no2" name="catalog_no2" value="{{ note.catalog_no2 or '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="catalog1_long_desc">Catalog 1 Long Desc</label>
+                            <textarea id="catalog1_long_desc" name="catalog1_long_desc" placeholder="e.g., Star note...">{{ note.catalog1_long_desc or '' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="catalog2_long_desc">Catalog 2 Long Desc</label>
+                            <textarea id="catalog2_long_desc" name="catalog2_long_desc" placeholder="e.g., Brown Seal...">{{ note.catalog2_long_desc or '' }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="catalog1_short_desc">Catalog 1 Short Desc</label>
+                            <input type="text" id="catalog1_short_desc" name="catalog1_short_desc" value="{{ note.catalog1_short_desc or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="catalog2_short_desc">Catalog 2 Short Desc</label>
+                            <input type="text" id="catalog2_short_desc" name="catalog2_short_desc" value="{{ note.catalog2_short_desc or '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="signers">Signers</label>
+                            <input type="text" id="signers" name="signers" value="{{ note.signers or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qualifiers">Qualifiers</label>
+                            <input type="text" id="qualifiers" name="qualifiers" value="{{ note.qualifiers or '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="plate_no">Plate No</label>
+                            <input type="text" id="plate_no" name="plate_no" value="{{ note.plate_no or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price_value_guide">Price Value Guide ($)</label>
+                        <input type="number" id="price_value_guide" name="price_value_guide" step="0.01" min="0" value="{{ note.price_value_guide or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="population">Population</label>
+                        <input type="number" id="population" name="population" min="0" value="{{ note.population or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="pop_higher">Pop Higher</label>
+                        <input type="number" id="pop_higher" name="pop_higher" min="0" value="{{ note.pop_higher or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="value_view_link">Value View Link</label>
+                        <input type="url" id="value_view_link" name="value_view_link" value="{{ note.value_view_link or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="has_obverse_image">Has Obverse Image</label>
+                        <input type="checkbox" id="has_obverse_image" name="has_obverse_image" {% if note.has_obverse_image %}checked{% endif %}>
+                    </div>
+                    <div class="form-group">
+                        <label for="has_reverse_image">Has Reverse Image</label>
+                        <input type="checkbox" id="has_reverse_image" name="has_reverse_image" {% if note.has_reverse_image %}checked{% endif %}>
+                    </div>
+                    <div class="form-group">
+                        <label for="image_ready">Image Ready</label>
+                        <input type="checkbox" id="image_ready" name="image_ready" {% if note.image_ready %}checked{% endif %}>
+                    </div>
+                    <div class="form-group">
+                        <label for="image_description">Image Description</label>
+                        <input type="text" id="image_description" name="image_description" value="{{ note.image_description or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Custom notes about this bank note">{{ note.description or '' }}</textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Update Bank Note</button>
+                        <a href="{{ url_for('notes_bp.notes') }}" class="btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h2>Bank Note Not Found</h2>
+                <p>Sorry, the bank note you're looking for doesn't exist or has already been deleted.</p>
+                <a href="{{ url_for('notes_bp.notes') }}" class="btn btn-primary">Back to Collection</a>
+            </div>
+            {% endif %}
+        </main>
+        
+        <footer>
+            <p>PyCoinCol &copy; 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
