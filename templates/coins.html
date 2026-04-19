@@ -8,9 +8,9 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🪙 PyCoinCol</h1>
-        </header>
+        {% include 'partials/navbar.html' %}
+        
+        <div class="message-spacer"></div>
         
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -23,12 +23,6 @@
         {% endwith %}
         
         <section class="action-section">
-            <section class="menu">
-                <nav class="menu-nav">
-                    <a href="{{ url_for('index_bp.index') }}" class="menu-link active">Welcome</a>
-                    <a href="{{ url_for('coins_bp.coins') }}" class="menu-link">Coins</a>
-                </nav>
-            </section>
             <div class="action-buttons">
                 <a href="{{ url_for('coins_bp.add_coin') }}" class="btn btn-primary">Add New Coin</a>
                 <span class="divider">|</span>

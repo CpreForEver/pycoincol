@@ -1,0 +1,18 @@
+<nav class="top-navbar">
+    <div class="navbar-brand">
+        <span class="navbar-logo">🪙</span>
+        <span class="navbar-title">PyCoinCol</span>
+    </div>
+    {% set current_endpoint = request.endpoint %}
+    <div class="navbar-menu">
+        <a href="{{ url_for('index_bp.index') }}" class="menu-link" {% if current_endpoint == 'index_bp.index' %}class="active"{% endif %}>
+            <span class="arrow">↔</span> Welcome
+        </a>
+        <a href="{{ url_for('coins_bp.coins') }}" class="menu-link" {% if current_endpoint == 'coins_bp.coins' %}class="active"{% endif %}>
+            <span class="arrow">↔</span> Coins
+        </a>
+        <a href="{{ url_for('notes_bp.notes') }}" class="menu-link" {% if current_endpoint == 'notes_bp.notes' %}class="active"{% endif %}>
+            <span class="arrow">↔</span> Bank Notes
+        </a>
+    </div>
+</nav>
