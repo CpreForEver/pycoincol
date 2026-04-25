@@ -127,8 +127,6 @@
             </div>
         </main>
         
-</body>
-    
     <script>
         function handleEnter(event) {
             // Check if Enter was pressed in the PCGS No input field only
@@ -169,7 +167,11 @@
                     document.getElementById('price_guide_value').value = data.PriceGuideValue || 0;
                     document.getElementById('population').value = data.Population || 0;
                     document.getElementById('pop_higher').value = data.PopHigher || 0;
-                    document.getElementById('coin_facts_link').value = 'http://' + data.CoinFactsLink || '';
+                    const coinFactsUrl = data.CoinFactsLink || '';
+                    if (coinFactsUrl && !coinFactsUrl.startsWith('http')) {
+                        coinFactsUrl = 'https://' + coinFactsUrl;
+                    }
+                    document.getElementById('coin_facts_link').value = coinFactsUrl;
                     document.getElementById('designer').value = data.Designer || '';
                 }else{
                     alert('Search error: PCGS number ' + pcgsNo + ' not found')
@@ -180,4 +182,5 @@
             }
         }
     </script>
+</body>
 </html>

@@ -6,7 +6,7 @@
     <title>Home - PyCoinCol</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body>
+<body class="page-layout">
     <div class="container">
         {% include 'partials/navbar.html' %}
         
@@ -33,10 +33,6 @@
                         <input type="text" id="coins-input" name="coins" placeholder="Search by coin name...">
                     </div>
                     <button type="button" class="search-btn button" onclick="searchCoins()">Search</button>
-                    <div class="total-amount" style="display:none;" id="total-amount-wrapper">
-                        <label class="label">Total Amount:</label>
-                        <span class="amount-value" id="total-amount">${{ "{:,.2f}".format(total_value) }}</span>
-                    </div>
                 </div>
                 
                 <table class="coins-table">

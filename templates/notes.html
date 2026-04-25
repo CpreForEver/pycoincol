@@ -47,17 +47,10 @@
                     {% for note in notes %}
                         <tr class="note-row" data-id="{{ note.id }}">
                             <td class="image-cell">
-                                {% if note.image_description %}
-                                    <div class="note-placeholder">
-                                        <span>🪪</span>
-                                        <p>{{ note.name }}</p>
-                                    </div>
-                                {% else %}
-                                    <div class="note-placeholder">
-                                        <span>🪪</span>
-                                        <p>{{ note.name }}</p>
-                                    </div>
-                                {% endif %}
+                    <div class="note-placeholder">
+                        <span>🪪</span>
+                        <p>{{ note.name }}</p>
+                    </div>
                             </td>
                             <td class="details-cell">
                                 <h3>{{ note.name }}</h3>
@@ -93,8 +86,6 @@
                 <a href="{{ url_for('notes_bp.add_note') }}" class="btn btn-primary">Add Your First Bank Note</a>
             </div>
         {% endif %}
-
-        </main>
         
         <footer>
             <p>PyCoinCol &copy; 2026</p>

@@ -3,16 +3,18 @@
         <span class="navbar-logo">🪙</span>
         <span class="navbar-title">PyCoinCol</span>
     </div>
-    {% set current_endpoint = request.endpoint %}
     <div class="navbar-menu">
-        <a href="{{ url_for('index_bp.index') }}" class="menu-link" {% if current_endpoint == 'index_bp.index' %}class="active"{% endif %}>
+        <a href="{{ url_for('index_bp.index') }}" class="menu-link {% if request.endpoint == 'index_bp.index' %}active{% endif %}">
             <span class="arrow">↔</span> Welcome
         </a>
-        <a href="{{ url_for('coins_bp.coins') }}" class="menu-link" {% if current_endpoint == 'coins_bp.coins' %}class="active"{% endif %}>
+        <a href="{{ url_for('coins_bp.coins') }}" class="menu-link {% if request.endpoint == 'coins_bp.coins' %}active{% endif %}">
             <span class="arrow">↔</span> Coins
         </a>
-        <a href="{{ url_for('notes_bp.notes') }}" class="menu-link" {% if current_endpoint == 'notes_bp.notes' %}class="active"{% endif %}>
+        <a href="{{ url_for('notes_bp.notes') }}" class="menu-link {% if request.endpoint == 'notes_bp.notes' %}active{% endif %}">
             <span class="arrow">↔</span> Bank Notes
+        </a>
+        <a href="{{ url_for('coin_sets_bp.coin_sets') }}" class="menu-link {% if request.endpoint == 'coin_sets_bp.coin_sets' %}active{% endif %}">
+            <span class="arrow">↔</span> Coin Sets
         </a>
     </div>
 </nav>

@@ -5,6 +5,7 @@ description = "A Flask application for managing a coin collection"
 requires-python = ">=3.9"
 dependencies = [
     "flask",
+    "flask-wtf>=1.2.2",
     "requests",
 ]
 

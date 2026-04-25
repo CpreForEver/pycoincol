@@ -192,6 +192,11 @@ pycoincol/
 │   ├── edit_coin.html   # Edit coin form
 │   ├── notes.html       # Bank notes listing
 │   ├── add_notes.html   # Add bank note form
+│   ├── coin_sets.html   # Coin sets listing
+│   ├── add_coin_sets.html   # Add coin set form
+│   ├── edit_coin_sets.html # Edit coin set form
+│   ├── coin_set_edit.html   # Coin set edit form
+│   ├── coin_set_delete.html # Coin set delete confirmation
 │   └── edit_notes.html  # Edit bank note form
 ├── static/
 │   ├── css/style.css    # Styles
