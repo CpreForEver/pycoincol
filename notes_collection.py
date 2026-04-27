@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
-import os
-import io
 import csv
+import io
+import os
+
+import requests
 from flask import (
     Blueprint,
-    request,
-    redirect,
-    url_for,
     flash,
     jsonify,
-    send_file,
+    redirect,
     render_template,
+    request,
+    send_file,
+    url_for,
 )
-import requests
 
-from database import get_db, load_api_token
+from database import get_db
 
 NOTES_bp = Blueprint('notes_bp', __name__, template_folder='templates')
 
@@ -277,7 +278,7 @@ def edit_note(note_id):
         flash(f'Bank note "{name}" updated successfully!', "success")
         return redirect(url_for("notes_bp.notes"))
 
-    return render_template("edit_note.html", note=note)
+    return render_template("edit_notes.html", note=note)
 
 
 @NOTES_bp.route("/delete_note/<int:note_id>", methods=["GET"])

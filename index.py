@@ -1,14 +1,13 @@
 from flask import (
     Blueprint,
-    request,
-    redirect,
-    url_for,
     flash,
-    jsonify,
-    send_file,
+    redirect,
     render_template,
+    request,
+    url_for,
 )
-from database import get_total_value, get_db
+
+from database import get_db, get_total_value
 
 index_bp = Blueprint('index_bp', __name__, template_folder='templates')
 
@@ -100,6 +99,47 @@ def edit_coin(id):
         return redirect(url_for("index_bp.index"))
 
     return render_template("edit_coin.html", coin=coin)
+
+
+@index_bp.route("/search_all")
+def search_all():
+    """Unified search across coins, notes, and coin sets"""
+    search_term = request.args.get("q", "").strip()
+
+    conn = get_db()
+    results = []
+    total_value = 0
+
+    if search_term:
+        # Search coins
+        coin_results = conn.execute(
+            "SELECT 'coin' as type, id, pcgs_no, year, name, grade, price_guide_value as value FROM coins WHERE name LIKE ? OR pcgs_no LIKE ? OR year LIKE ?",
+            (f"%{search_term}%", f"%{search_term}%", f"{search_term}")
+        ).fetchall()
+        results.extend([dict(r) for r in coin_results])
+        total_value += sum(c.get("value", 0) or 0 for c in coin_results)
+
+        # Search notes
+        note_results = conn.execute(
+            "SELECT 'note' as type, id, pcgs_no, year, name, grade, price_value_guide as value FROM notes WHERE name LIKE ? OR pcgs_no LIKE ? OR year LIKE ?",
+            (f"%{search_term}%", f"%{search_term}%", f"{search_term}")
+        ).fetchall()
+        results.extend([dict(r) for r in note_results])
+        total_value += sum(n.get("value", 0) or 0 for n in note_results)
+
+        # Search coin sets
+        set_results = conn.execute(
+            "SELECT 'coin_set' as type, id, NULL as pcgs_no, year, '' as name, grade, price_value_guide as value FROM coin_sets WHERE year LIKE ? OR region LIKE ? OR grade LIKE ?",
+            (f"{search_term}", f"%{search_term}%", f"{search_term}")
+        ).fetchall()
+        results.extend([dict(r) for r in set_results])
+        total_value += sum(s.get("value", 0) or 0 for s in set_results)
+
+    return jsonify({
+        "results": results,
+        "total_value": total_value,
+        "count": len(results)
+    })
 
 
 @index_bp.route("/")

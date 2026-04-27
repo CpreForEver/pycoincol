@@ -1,5 +1,5 @@
-import sqlite3
 import os
+import sqlite3
 
 LOGGING = True
 
@@ -150,18 +150,18 @@ def get_total_value():
     """Calculate total value of all coins, notes, and sets by summing price_value_guide fields"""
     conn = get_db()
     c = conn.cursor()
-    
+
     # Sum price_guide_value from coins
     coin_total = c.execute("SELECT SUM(price_guide_value) FROM coins").fetchone()[0]
-    
+
     # Sum price_value_guide from notes
     note_total = c.execute("SELECT SUM(price_value_guide) FROM notes").fetchone()[0]
-    
+
     # Sum price_value_guide from coin_sets
     set_total = c.execute("SELECT SUM(price_value_guide) FROM coin_sets").fetchone()[0]
-    
+
     conn.close()
-    
+
     total = (coin_total or 0) + (note_total or 0) + (set_total or 0)
     return round(total, 2)
 
@@ -170,7 +170,7 @@ def add_note(data):
     """Add a new bank note to the database"""
     conn = get_db()
     c = conn.cursor()
-    
+
     try:
         c.execute("""
             INSERT INTO notes (
@@ -225,12 +225,12 @@ def update_note(id, data):
     """Update an existing bank note"""
     conn = get_db()
     c = conn.cursor()
-    
+
     try:
         # Update only provided fields
         fields = []
         values = []
-        
+
         if "name" in data:
             fields.append("name = ?")
             values.append(data["name"])
@@ -312,11 +312,11 @@ def update_note(id, data):
         if "price_value_guide" in data:
             fields.append("price_value_guide = ?")
             values.append(data["price_value_guide"])
-        
+
         if fields:
             fields.append("updated_at = CURRENT_TIMESTAMP")
             values.append(id)
-            
+
             c.execute(f"UPDATE notes SET {', '.join(fields)} WHERE id = ?", values)
             conn.commit()
             return c.rowcount
@@ -333,7 +333,7 @@ def delete_note(id):
     """Delete a bank note by ID"""
     conn = get_db()
     c = conn.cursor()
-    
+
     try:
         c.execute("DELETE FROM notes WHERE id = ?", (id,))
         conn.commit()
@@ -349,11 +349,11 @@ def delete_note(id):
 def get_all_notes(filters=None):
     """Get all bank notes with optional filtering"""
     conn = get_db()
-    
+
     # Build query with optional filters
     conditions = []
     params = []
-    
+
     filters = filters or {}
     if filters.get("year") is not None:
         conditions.append("year = ?")
@@ -364,11 +364,11 @@ def get_all_notes(filters=None):
     if filters.get("grade") is not None:
         conditions.append("grade = ?")
         params.append(filters["grade"])
-    
+
     query = "SELECT * FROM notes WHERE 1=1"
     if conditions:
         query += " AND " + " AND ".join(conditions)
-    
+
     notes = conn.execute(query, params).fetchall()
     conn.close()
     return notes
@@ -378,7 +378,7 @@ def add_set(data):
     """Add a new coin set to the database"""
     conn = get_db()
     c = conn.cursor()
-    
+
     try:
         c.execute("""
             INSERT INTO coin_sets (
@@ -424,11 +424,11 @@ def get_set_by_year(year):
 def get_all_sets(filters=None):
     """Get all coin sets with optional filtering"""
     conn = get_db()
-    
+
     # Build query with optional filters
     conditions = []
     params = []
-    
+
     filters = filters or {}
     if filters.get("year") is not None:
         conditions.append("year = ?")
@@ -439,11 +439,11 @@ def get_all_sets(filters=None):
     if filters.get("grade") is not None:
         conditions.append("grade = ?")
         params.append(filters["grade"])
-    
+
     query = "SELECT * FROM coin_sets WHERE 1=1"
     if conditions:
         query += " AND " + " AND ".join(conditions)
-    
+
     sets = conn.execute(query, params).fetchall()
     conn.close()
     return sets
@@ -453,12 +453,12 @@ def update_set(id, data):
     """Update an existing coin set"""
     conn = get_db()
     c = conn.cursor()
-    
+
     try:
         # Update only provided fields
         fields = []
         values = []
-        
+
         if "year" in data:
             fields.append("year = ?")
             values.append(data["year"])
@@ -507,11 +507,11 @@ def update_set(id, data):
         if "price_value_guide" in data:
             fields.append("price_value_guide = ?")
             values.append(data["price_value_guide"])
-        
+
         if fields:
             fields.append("updated_at = CURRENT_TIMESTAMP")
             values.append(id)
-            
+
             c.execute(f"UPDATE coin_sets SET {', '.join(fields)} WHERE id = ?", values)
             conn.commit()
             return c.rowcount
@@ -528,7 +528,7 @@ def delete_set(id):
     """Delete a coin set by ID"""
     conn = get_db()
     c = conn.cursor()
-    
+
     try:
         c.execute("DELETE FROM coin_sets WHERE id = ?", (id,))
         conn.commit()

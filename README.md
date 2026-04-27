@@ -33,7 +33,7 @@ A Flask-based web application for managing coin collections with SQLite storage,
 - Edit existing coins, bank notes, and coin sets
 - Delete items with confirmation
 - Responsive HTML/CSS/JS interface
-- Search coin database directly from home page
+- Unified search across coins, bank notes, and coin sets from home page
 - PCGS API integration to fetch coin, note, and set data
 - Automatic total portfolio value calculation (coins + notes + sets)
 - PCGS API Bearer token authentication

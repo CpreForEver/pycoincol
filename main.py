@@ -1,11 +1,12 @@
-from flask import Flask
-from coin_collection import COINS_bp
-from index import index_bp
-from notes_collection import NOTES_bp
-from coin_sets_collection import COIN_SETS_bp
-from database import load_api_token, init_db
 import os
 
+from flask import Flask
+
+from coin_collection import COINS_bp
+from coin_sets_collection import COIN_SETS_bp
+from database import init_db, load_api_token
+from index import index_bp
+from notes_collection import NOTES_bp
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)

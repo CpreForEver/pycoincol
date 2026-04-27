@@ -167,7 +167,7 @@
                     document.getElementById('price_guide_value').value = data.PriceGuideValue || 0;
                     document.getElementById('population').value = data.Population || 0;
                     document.getElementById('pop_higher').value = data.PopHigher || 0;
-                    const coinFactsUrl = data.CoinFactsLink || '';
+                    var coinFactsUrl = data.CoinFactsLink || '';
                     if (coinFactsUrl && !coinFactsUrl.startsWith('http')) {
                         coinFactsUrl = 'https://' + coinFactsUrl;
                     }

@@ -21,51 +21,78 @@ function confirmDelete(id, name) {
     }
 }
 
-// Search coins function
-function searchCoins() {
-    const input = document.getElementById('coins-input');
+function searchAll() {
+    const input = document.getElementById('search-input');
     const query = input.value.trim();
     const tbody = document.getElementById('coins-table-body');
-    const totalAmountWrapper = document.getElementById('total-amount-wrapper');
+    const noResultsRow = tbody.querySelector('.no-results');
     
     if (query) {
-        // Clear existing rows
-        tbody.innerHTML = '<tr><td colspan="6">Searching...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Searching...</td></tr>';
         
-        fetch(`/api/coins?q=${encodeURIComponent(query)}`)
+        fetch(`/search_all?q=${encodeURIComponent(query)}`)
             .then(response => response.json())
-            .then(coins => {
-                if (coins.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6">No coins found</td></tr>';
+            .then(data => {
+                const results = data.results || [];
+                
+                if (results.length === 0) {
+                    noResultsRow.style.display = 'table-row';
+                    tbody.innerHTML = '';
+                    tbody.appendChild(noResultsRow);
                 } else {
-                    tbody.innerHTML = coins.map(coin => `
-                        <tr>
-                            <td>${coin.id}</td>
-                            <td>${coin.pcgs_no || '-'}</td>
-                            <td>${coin.year}</td>
-                            <td>${coin.name}</td>
-                            <td>${coin.grade || '-'}</td>
-                            <td>$${coin.price_guide_value ? coin.price_guide_value.toFixed(2) : '-'}</td>
-                            <td>
-                             <a href="edit_coin/${coin.id}" class="btn btn-small btn-secondary">Edit</a>
-                             <a href="javascript:void(0);" onclick="confirmDelete(${coin.id}, '${coin.name}')" class="btn btn-small btn-danger">Delete</a>
-                           </td>
-                        </tr>
-                    `).join('');
+                    noResultsRow.style.display = 'none';
+                    tbody.innerHTML = results.map(item => {
+                        const pcgsNo = item.pcgs_no ? `<td>${item.pcgs_no}</td>` : '<td>-</td>';
+                        
+                        if (item.type === 'coin') {
+                            return `
+                                <tr>
+                                    <td>${item.id}</td>
+                                    <td><span class="type-badge type-coin">Coin</span></td>
+                                    ${pcgsNo}
+                                    <td>${item.year}</td>
+                                    <td>${item.name}</td>
+                                    <td>${item.grade || '-'}</td>
+                                    <td style="text-align: right;">${item.value ? '$' + item.value.toFixed(2) : '-'}</td>
+                                </tr>
+                            `;
+                        } else if (item.type === 'note') {
+                            return `
+                                <tr>
+                                    <td>${item.id}</td>
+                                    <td><span class="type-badge type-note">Note</span></td>
+                                    ${pcgsNo}
+                                    <td>${item.year}</td>
+                                    <td>${item.name}</td>
+                                    <td>${item.grade || '-'}</td>
+                                    <td style="text-align: right;">${item.value ? '$' + item.value.toFixed(2) : '-'}</td>
+                                </tr>
+                            `;
+                        } else if (item.type === 'coin_set') {
+                            return `
+                                <tr>
+                                    <td>${item.id}</td>
+                                    <td><span class="type-badge type-coinset">Set</span></td>
+                                    <td>-</td>
+                                    <td>${item.year || '-'}</td>
+                                    <td>${item.region || item.grade || '-'}</td>
+                                    <td>${item.grade && item.name ? item.grade : '-'}</td>
+                                    <td style="text-align: right;">${item.value ? '$' + item.value.toFixed(2) : '-'}</td>
+                                </tr>
+                            `;
+                        }
+                    }).join('');
                     
-                    // Calculate and display total
-                    const total = coins.reduce((sum, coin) => sum + (coin.price_guide_value || 0), 0);
-                    document.getElementById('total-amount').innerText = `$${total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-                    totalAmountWrapper.style.display = 'block';
+                    document.getElementById('total-amount').innerText = '$' + data.total_value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="6">Error fetching data</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Error fetching data</td></tr>';
             });
     } else {
         tbody.innerHTML = '';
-        totalAmountWrapper.style.display = 'none';
+        noResultsRow.style.display = 'none';
     }
 }
 
@@ -80,10 +107,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Trigger once on load
         this.style.height = (this.scrollHeight) + 'px';
     }
-    // Search on Enter key
-    document.getElementById('coins-input').addEventListener('keypress', function(e) {
+    document.getElementById('search-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            searchCoins();
+            searchAll();
         }
     });
 });

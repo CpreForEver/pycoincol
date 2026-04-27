@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
-import os
-import io
 import csv
+import io
+import os
+
+import requests
 from flask import (
     Blueprint,
-    request,
-    redirect,
-    url_for,
     flash,
     jsonify,
-    send_file,
+    redirect,
     render_template,
+    request,
+    send_file,
+    url_for,
 )
-import requests
 
-from database import get_db, load_api_token
+from database import get_db
 
 COINS_bp = Blueprint('coins_bp', __name__, template_folder='templates')
 
@@ -33,7 +34,7 @@ def api_coins():
     """API endpoint to get all coins or search results"""
     search_term = request.args.get("q", "").strip()
     conn = get_db()
-    
+
     if search_term:
         coins = conn.execute(
             "SELECT * FROM coins WHERE name LIKE ? OR pcgs_no LIKE ? OR year LIKE ? ORDER BY price_guide_value DESC",
@@ -41,7 +42,7 @@ def api_coins():
         ).fetchall()
     else:
         coins = conn.execute("SELECT * FROM coins ORDER BY price_guide_value DESC").fetchmany(100)
-    
+
     conn.close()
     return jsonify([dict(coin) for coin in coins])
 
@@ -132,7 +133,7 @@ def search_pcgs_coins():
 
         headers = {
             "authorization": f"bearer {pcgs_api_key}",
-            "accept": "COINS_bplication/json",
+            "accept": "application/json",
         }
 
         url = f"https://api.pcgs.com/publicapi/coindetail/GetCoinFactsByGrade?PCGSNo={pcgs_no}&GradeNo=1&PlusGrade=false&api_key={pcgs_api_key}"
